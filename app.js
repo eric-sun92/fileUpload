@@ -10,7 +10,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static("./public"));
 const fileUpload = require("express-fileupload");
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true }));
+
+// USE V2
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+});
 
 //routes
 app.get("/", (req, res) => {
