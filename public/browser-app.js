@@ -4,6 +4,8 @@ const fileFormDOM = document.querySelector(".file-form");
 const nameInputDOM = document.querySelector("#name");
 const priceInputDOM = document.querySelector("#price");
 const imageInputDOM = document.querySelector("#image");
+const clearImages = document.querySelector("#clear")
+const addImages = document.querySelector("#add")
 
 const containerDOM = document.querySelector(".container");
 let imageValue;
@@ -34,7 +36,7 @@ imageInputDOM.addEventListener("change", async (e) => {
   }
 });
 
-fileFormDOM.addEventListener("submit", async (e) => {
+addImages.addEventListener("click", async (e) => {
   e.preventDefault();
   const nameValue = nameInputDOM.value;
   const priceValue = priceInputDOM.value;
@@ -48,6 +50,17 @@ fileFormDOM.addEventListener("submit", async (e) => {
   }
 });
 
+clearImages.addEventListener("click", async (e) => {
+  e.preventDefault();
+  try {
+    await axios.delete("/api/v1/products/clear");
+    fetchProducts();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 async function fetchProducts() {
   try {
     const {
@@ -57,7 +70,7 @@ async function fetchProducts() {
     const productsDOM = products
       .map((product) => {
         return `<article class="product">
-<img src="${product.image}" alt="${product.name}" class="img"/>
+        <img src="${product.image}" alt="${product.name}" class="img"/>
 <footer>
 <p>${product.name}</p>
 <span>$${product.price}</span>
