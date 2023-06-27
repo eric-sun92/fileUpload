@@ -5,7 +5,6 @@ const {
   getAllProducts,
   createProduct,
   clearProducts,
-  deleteProduct
 } = require("../controllers/productController");
 const { uploadProductImage } = require("../controllers/uploadsController");
 
